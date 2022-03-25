@@ -11,7 +11,7 @@ Each executor is a JVM instance. So we can have multiple executors in a single N
 
 First 1 core and 1 GB is needed for OS and Hadoop Daemons, so available are 15 cores, 63 GB RAM for each node
 
-- Start with how to choose number of cores:
+-  **Start with how to choose number of cores:**
 
    1. Number of cores = Concurrent tasks as executor can run 
 
@@ -20,3 +20,29 @@ First 1 core and 1 GB is needed for OS and Hadoop Daemons, so available are 15 c
 
    3. This number came from the ability of executor and not from how many cores a system has. So the number 5 stays same
    even if you have double(32) cores in the CPU.
+   
+-  **Number of executors:**   
+
+   1. Coming back to next step, with 5 as cores per executor, and 15 as total available cores in one Node(CPU) - we come to 
+   3 executors per node.
+
+   2. So with 6 nodes, and 3 executors per node - we get 18 executors. Out of 18 we need 1 executor (java process) for AM in YARN we get 17 executors
+
+   3. This 17 is the number we give to spark using --num-executors while running from spark-submit shell command
+
+- **Memory for each executor:**
+  
+  1.From above step, we have 3 executors  per node. And available RAM is 63 GB
+
+  2. So memory for each executor is 63/3 = 21GB. 
+
+  3. However small overhead memory is also needed to determine the full memory request to YARN for each executor.
+  Formula for that over head is max(384, .07 * spark.executor.memory)
+
+  4. Calculating that overhead - .07 * 21 (Here 21 is calculated as above 63/3)
+                            = 1.47
+
+   Since 1.47 GB > 384 MB, the over head is 1.47.
+   Take the above from each 21 above => 21 - 1.47 ~ 19 GB
+
+  5. So executor memory - 19 GB
