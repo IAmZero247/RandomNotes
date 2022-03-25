@@ -2,8 +2,8 @@ https://drive.google.com/drive/folders/1PH_naUqXpnfSFrPPSY_nm4ZqYAo2OSti
 # How to tune spark executor number, cores and executor memory?
 
 
-~The following answer covers the 3 main aspects mentioned in title - number of executors, executor memory and number of cores.
-There may be other parameters like driver memory and others which I did not address as of this answer, but would like to add in near future.~
+***The following answer covers the 3 main aspects mentioned in title - number of executors, executor memory and number of cores.
+There may be other parameters like driver memory and others which I did not address as of this answer, but would like to add in near future.***
 
 ## Case 1 Hardware - 6 Nodes, and Each node 16 cores, 64 GB RAM
 
@@ -48,3 +48,15 @@ First 1 core and 1 GB is needed for OS and Hadoop Daemons, so available are 15 c
   5. So executor memory - 19 GB
 
   **Final numbers - Executors - 17, Cores 5, Executor Memory - 19 GB**
+  
+## Case 2 Hardware : Same 6 Node, 32 Cores, 64 GB
+
+- 5 is same for good concurrency
+
+- Number of executors for each node = 32/5 ~ 6
+
+- So total executors = 6 * 6 Nodes = 36. Then final number is 36 - 1 for AM = 35
+
+- Executor memory is : 6 executors for each node. 63/6 ~ 10 . Over head is .07 * 10 = 700 MB. So rounding to 1GB as over head, we get 10-1 = 9 GB
+
+- **Final numbers - Executors - 35, Cores 5, Executor Memory - 9 GB**
