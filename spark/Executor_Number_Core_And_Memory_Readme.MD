@@ -42,7 +42,9 @@ First 1 core and 1 GB is needed for OS and Hadoop Daemons, so available are 15 c
   4. Calculating that overhead - .07 * 21 (Here 21 is calculated as above 63/3)
                             = 1.47
 
-   Since 1.47 GB > 384 MB, the over head is 1.47.
-   Take the above from each 21 above => 21 - 1.47 ~ 19 GB
+     - Since 1.47 GB > 384 MB, the over head is 1.47.
+     - Take the above from each 21 above => 21 - 1.47 ~ 19 GB
 
   5. So executor memory - 19 GB
+
+  **Final numbers - Executors - 17, Cores 5, Executor Memory - 19 GB**
