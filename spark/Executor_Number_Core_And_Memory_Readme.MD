@@ -60,3 +60,22 @@ First 1 core and 1 GB is needed for OS and Hadoop Daemons, so available are 15 c
 - Executor memory is : 6 executors for each node. 63/6 ~ 10 . Over head is .07 * 10 = 700 MB. So rounding to 1GB as over head, we get 10-1 = 9 GB
 
 - **Final numbers - Executors - 35, Cores 5, Executor Memory - 9 GB**
+
+
+## Case 3
+
+- The above scenarios start with accepting number of cores as fixed and moving to # of executors and memory.
+
+- Now for first case, if we think we dont need 19 GB, and just 10 GB is sufficient, then following are the numbers:
+
+- cores 5 # of executors for each node = 3
+
+- At this stage, this would lead to 21, and then 19 as per our first calculation. But since we thought 10 is ok (assume little overhead), then we cant switch # of executors per node to 6 (like 63/10). Becase with 6 executors per node and 5 cores it comes down to 30 cores per node, when we only have 16 cores. So we also need to change number of cores for each executor.
+
+- So calculating again,
+
+- The magic number 5 comes to 3 (any number less than or equal to 5). So with 3 cores, and 15 available cores - we get 5 executors per node. So (5*6 -1) = 29 executors
+
+- So memory is 63/5 ~ 12. Over head is 12*.07=.84 So executor memory is 12 - 1 GB = 11 GB
+
+- Final Numbers are 29 executors, 3 cores, executor memory is 11 GB
