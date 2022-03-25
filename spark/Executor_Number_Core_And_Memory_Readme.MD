@@ -1,4 +1,4 @@
-https://drive.google.com/drive/folders/1PH_naUqXpnfSFrPPSY_nm4ZqYAo2OSti
+
 # How to tune spark executor number, cores and executor memory?
 
 
