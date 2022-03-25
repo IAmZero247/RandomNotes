@@ -79,3 +79,34 @@ First 1 core and 1 GB is needed for OS and Hadoop Daemons, so available are 15 c
 - So memory is 63/5 ~ 12. Over head is 12*.07=.84 So executor memory is 12 - 1 GB = 11 GB
 
 - Final Numbers are 29 executors, 3 cores, executor memory is 11 GB
+
+
+## Dynamic Allocation:
+
+- Note : Upper bound for the number of executors if dynamic allocation is enabled. So this says that spark application can eat away all the resources if needed. So in a cluster where you have other applications are running and they also need cores to run the tasks, please make sure you do it at cluster level. I mean you can allocate specific number of cores for YARN based on user access. So you can create spark_user may be and then give cores (min/max) for that user. These limits are for sharing between spark and other applications which run on YARN.
+
+- spark.dynamicAllocation.enabled - When this is set to true - We need not mention executors. The reason is below:
+
+- The static params number we give at spark-submit is for the entire job duration. However if dynamic allocation comes into picture, there would be different stages like
+
+## What to start with :
+
+- Initial number of executors (spark.dynamicAllocation.initialExecutors) to start with
+
+**How many :**
+
+- Then based on load (tasks pending) how many to request. This would eventually be the numbers what we give at spark-submit in static way. So once the initial executor numbers are set, we go to min (spark.dynamicAllocation.minExecutors) and max (spark.dynamicAllocation.maxExecutors) numbers.
+
+## When to ask or give:
+
+- When do we request new executors (spark.dynamicAllocation.schedulerBacklogTimeout) - There have been pending tasks for this much duration. so request. number of executors requested in each round increases exponentially from the previous round. For instance, an application will add 1 executor in the first round, and then 2, 4, 8 and so on executors in the subsequent rounds. At a specific point, the above max comes into picture
+
+- when do we give away an executor (spark.dynamicAllocation.executorIdleTimeout) -
+
+- Please correct me if I missed anything. The above is my understanding based on the blog i shared in question and some online resources. Thank you.
+
+## References:
+
+http://site.clairvoyantsoft.com/understanding-resource-allocation-configurations-spark-application/
+http://spark.apache.org/docs/latest/configuration.html#dynamic-allocation
+http://spark.apache.org/docs/latest/job-scheduling.html#resource-allocation-policy
