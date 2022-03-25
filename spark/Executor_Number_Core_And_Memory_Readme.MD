@@ -107,6 +107,6 @@ First 1 core and 1 GB is needed for OS and Hadoop Daemons, so available are 15 c
 
 ## References:
 
-http://site.clairvoyantsoft.com/understanding-resource-allocation-configurations-spark-application/
-http://spark.apache.org/docs/latest/configuration.html#dynamic-allocation
-http://spark.apache.org/docs/latest/job-scheduling.html#resource-allocation-policy
+- http://site.clairvoyantsoft.com/understanding-resource-allocation-configurations-spark-application/
+- http://spark.apache.org/docs/latest/configuration.html#dynamic-allocation
+- http://spark.apache.org/docs/latest/job-scheduling.html#resource-allocation-policy
